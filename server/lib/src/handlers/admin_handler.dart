@@ -294,9 +294,15 @@ class AdminHandler {
       final price = requireInt(body, 'price', min: 1);
       final stockQuantity = requireInt(body, 'stockQuantity', min: 0);
       final imageUrl = requireString(body, 'imageUrl', allowEmpty: true);
-      final warrantyPeriod = requireString(body, 'warrantyPeriod', allowEmpty: true);
+      final warrantyPeriod = requireString(
+        body,
+        'warrantyPeriod',
+        allowEmpty: true,
+      );
       final brandId = requireInt(body, 'brandId', min: 1);
       final categoryId = requireInt(body, 'categoryId', min: 1);
+
+      late final int createdProductId;
 
       await database.connection.runTx((tx) async {
         await _setAuditAccount(tx, admin.accountId);
@@ -317,9 +323,49 @@ class AdminHandler {
             categoryId,
           ],
         );
+
+        final createdRows = await tx.execute(
+          r'''
+          SELECT ID_Product AS product_id
+          FROM Products
+          WHERE ProductName = $1
+            AND Model = $2
+            AND Price = $3
+            AND StockQuantity = $4
+            AND Brand_ID = $5
+            AND Category_ID = $6
+            AND Description IS NOT DISTINCT FROM $7
+            AND ImageURL IS NOT DISTINCT FROM $8
+            AND WarrantyPeriod IS NOT DISTINCT FROM $9
+          ORDER BY ID_Product DESC
+          LIMIT 1
+          ''',
+          parameters: [
+            productName,
+            model,
+            price,
+            stockQuantity,
+            brandId,
+            categoryId,
+            description.isEmpty ? null : description,
+            imageUrl.isEmpty ? null : imageUrl,
+            warrantyPeriod.isEmpty ? null : warrantyPeriod,
+          ],
+        );
+
+        if (createdRows.isEmpty) {
+          throw Exception('Товар добавлен, но не удалось получить его ID');
+        }
+
+        createdProductId = _toInt(
+          createdRows.first.toColumnMap()['product_id'],
+        );
       });
 
-      return jsonCreated({'message': 'Товар успешно добавлен'});
+      return jsonCreated({
+        'message': 'Товар успешно добавлен',
+        'productId': createdProductId,
+      });
     } on FormatException catch (e) {
       return jsonBadRequest(e.message);
     } catch (e) {

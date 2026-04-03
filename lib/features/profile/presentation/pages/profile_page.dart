@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../../auth/presentation/providers/auth_providers.dart';
 import '../../domain/models/address.dart';
 import '../../domain/models/user_profile.dart';
 import '../providers/profile_providers.dart';
@@ -43,22 +41,6 @@ class _ProfileContent extends ConsumerWidget {
         Text(
           'Профиль',
           style: Theme.of(context).textTheme.headlineMedium,
-        ),
-        const SizedBox(height: 16),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: OutlinedButton.icon(
-            onPressed: isLoading
-                ? null
-                : () async {
-                    await ref.read(authControllerProvider.notifier).logout();
-                    if (context.mounted) {
-                      context.go('/login');
-                    }
-                  },
-            icon: const Icon(Icons.logout),
-            label: const Text('Выйти'),
-          ),
         ),
         const SizedBox(height: 20),
         Card(
@@ -101,9 +83,7 @@ class _ProfileContent extends ConsumerWidget {
         Align(
           alignment: Alignment.centerLeft,
           child: ElevatedButton.icon(
-            onPressed: isLoading
-                ? null
-                : () => _showAddressDialog(context, ref),
+            onPressed: isLoading ? null : () => _showAddressDialog(context, ref),
             icon: const Icon(Icons.add),
             label: const Text('Добавить адрес'),
           ),

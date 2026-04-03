@@ -63,14 +63,9 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       }
 
       if (isAdmin) {
-        if (isAuthPage) {
+        if (isAuthPage || isCustomerPage || isPublicPage) {
           return '/admin/products';
         }
-
-        if (isCustomerPage) {
-          return '/admin/products';
-        }
-
         return null;
       }
 

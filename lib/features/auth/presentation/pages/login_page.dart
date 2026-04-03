@@ -43,7 +43,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       );
 
       if (session.user.role == UserRole.admin) {
-        context.go('/admin');
+        context.go('/admin/products');
       } else {
         context.go('/catalog');
       }

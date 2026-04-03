@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 
+import '../../../../core/utils/json_parsers.dart';
 import '../../../catalog/domain/models/brand.dart';
 import '../../../catalog/domain/models/category.dart';
 import '../../../catalog/domain/models/product.dart';
@@ -53,8 +54,17 @@ class AdminRepository {
       },
     );
 
-    final data = response.data as Map<String, dynamic>;
-    return data['productId'] as int;
+    final data = response.data;
+    if (data is! Map) {
+      throw Exception('Некорректный ответ сервера при создании товара');
+    }
+
+    final rawProductId = data['productId'];
+    if (rawProductId == null) {
+      throw Exception('Сервер не вернул ID созданного товара');
+    }
+
+    return JsonParsers.toInt(rawProductId);
   }
 
   Future<void> updateProduct({
