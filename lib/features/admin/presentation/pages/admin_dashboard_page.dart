@@ -312,7 +312,7 @@ class _ProductsTableSection extends ConsumerWidget {
                       ),
                       const SizedBox(height: 12),
                       DropdownButtonFormField<int>(
-                        value: selectedBrandId,
+                        initialValue: selectedBrandId,
                         decoration: const InputDecoration(labelText: 'Бренд'),
                         items: brands
                             .map(
@@ -329,7 +329,7 @@ class _ProductsTableSection extends ConsumerWidget {
                       ),
                       const SizedBox(height: 12),
                       DropdownButtonFormField<int>(
-                        value: selectedCategoryId,
+                        initialValue: selectedCategoryId,
                         decoration:
                             const InputDecoration(labelText: 'Категория'),
                         items: categories
@@ -689,7 +689,7 @@ class _CategoriesTableSection extends ConsumerWidget {
                     ),
                     const SizedBox(height: 12),
                     DropdownButtonFormField<int?>(
-                      value: selectedParentId,
+                      initialValue: selectedParentId,
                       decoration: const InputDecoration(
                         labelText: 'Родительская категория',
                       ),
@@ -1044,7 +1044,7 @@ class _AdminOrdersSection extends ConsumerWidget {
             return AlertDialog(
               title: Text('Изменить статус заказа #$orderId'),
               content: DropdownButtonFormField<int>(
-                value: selectedStatusId,
+                initialValue: selectedStatusId,
                 items: statuses
                     .map(
                       (status) => DropdownMenuItem(
@@ -1233,7 +1233,7 @@ class _AdminUsersSection extends ConsumerWidget {
             return AlertDialog(
               title: Text('Сменить роль пользователя #$userId'),
               content: DropdownButtonFormField<int>(
-                value: selectedRoleId,
+                initialValue: selectedRoleId,
                 items: roles
                     .map(
                       (role) => DropdownMenuItem(

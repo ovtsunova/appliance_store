@@ -101,7 +101,7 @@ class DeliveryAddress {
   }
 
   String get fullAddress =>
-      '$country, $city, ${street} ${house}${apartment?.isNotEmpty == true ? ', кв. $apartment' : ''}, $postalCode';
+      '$country, $city, $street $house${apartment?.isNotEmpty == true ? ', кв. $apartment' : ''}, $postalCode';
 }
 
 class OrderDetailItem {

@@ -493,7 +493,7 @@ class _ReviewsSection extends ConsumerWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     DropdownButtonFormField<int>(
-                      value: selectedRating,
+                      initialValue: selectedRating,
                       decoration: const InputDecoration(labelText: 'Оценка'),
                       items: List.generate(
                         5,

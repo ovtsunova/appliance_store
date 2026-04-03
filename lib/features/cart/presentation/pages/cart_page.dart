@@ -227,7 +227,7 @@ class CartPage extends ConsumerWidget {
                   child: Column(
                     children: [
                       DropdownButtonFormField<int>(
-                        value: selectedAddressId,
+                        initialValue: selectedAddressId,
                         decoration: const InputDecoration(
                           labelText: 'Адрес доставки',
                         ),
@@ -250,7 +250,7 @@ class CartPage extends ConsumerWidget {
                       ),
                       const SizedBox(height: 12),
                       DropdownButtonFormField<int>(
-                        value: selectedDeliveryId,
+                        initialValue: selectedDeliveryId,
                         decoration: const InputDecoration(
                           labelText: 'Способ доставки',
                         ),
@@ -273,7 +273,7 @@ class CartPage extends ConsumerWidget {
                       ),
                       const SizedBox(height: 12),
                       DropdownButtonFormField<int>(
-                        value: selectedPaymentId,
+                        initialValue: selectedPaymentId,
                         decoration: const InputDecoration(
                           labelText: 'Способ оплаты',
                         ),
